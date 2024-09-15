@@ -22,10 +22,7 @@ const createCookie = (tokenData: TokenData): string => {
  * This class is responsible for all authentication operations.
  */
 export class AuthService {
-  /**
-   * Instance of the UserEntity repository.
-   * @private
-   */
+
   private readonly userRepository = AppDataSource.getRepository(UserEntity);
 
   /**

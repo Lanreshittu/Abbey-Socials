@@ -4,25 +4,37 @@ import { UserEntity } from "../entities/users.entity";
 import { Request, Response, NextFunction } from "express";
 import { User } from "../interface/users.interface";
 
+/**
+ * Handles user authentication
+ * @class AuthController
+ */
 export class AuthController {
-  public auth = new AuthService(UserEntity, AppDataSource.manager);
+  public  auth = new AuthService();
 
-  public SignUp = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userData: User = req.body;
-      const createdUser: User = await this.auth.createUser(userData);
-      res.status(201).json({ data: createdUser, message: "created" });
-    } catch (error) {
-      next(error);
-    }
-  };
-
+  /**
+   * Logs in a user and returns a cookie and user details
+   * @param req Request object
+   * @param res Response object
+   * @param next NextFunction object
+   * @returns A JSON response with status, message, data and token
+   */
   public Login = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      // Get user data from request body
       const userData: User = req.body;
+
+      // Login user and get user and cookie
       const { cookie, findUser } = await this.auth.login(userData);
-      res.status(200).json({ data: findUser, token: cookie, message: "login" });
+
+      // Return response with user and cookie
+      res.status(200).json({
+        status: 200,
+        message: "login successful",
+        data: findUser,
+        token: cookie
+      });
     } catch (error) {
+      // Call next function with error
       next(error);
     }
   };
