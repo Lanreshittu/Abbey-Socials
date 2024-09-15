@@ -20,8 +20,8 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
     const Authorization = getAuthorization(req);
 
     if (Authorization) {
-      const { id, userId } = (await verify(Authorization, String(SECRET_KEY))) as unknown as DataStoredInToken;
-      const user = await UserEntity.findOne({ where: { user_id: userId, id: id } });
+      const { userId } = (await verify(Authorization, String(SECRET_KEY))) as unknown as DataStoredInToken;
+      const user = await UserEntity.findOne({ where: { user_id: userId } });
 
       if (user) {
         req.user = user;

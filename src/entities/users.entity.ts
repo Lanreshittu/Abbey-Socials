@@ -1,18 +1,17 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { User } from "../interface/users.interface";
 
 
 @Entity()
 export class UserEntity extends BaseEntity implements User {
-    @PrimaryGeneratedColumn()
-    id: number;
-
-    @Column({ unique: true })
-    @Unique(["user_id"])
+    @PrimaryColumn()
     user_id: string;
 
     @Column()
-    name: string;
+    first_name: string;
+
+    @Column()
+    last_name: string;
 
     @Column()
     @Unique(["email"])
@@ -25,19 +24,7 @@ export class UserEntity extends BaseEntity implements User {
     phone_number: string;
 
     @Column({ nullable: true })
-    role: string;
-
-    @Column({ nullable: true })
     location: string;
-
-    @Column({ nullable: true })
-    dealership_id: string;
-
-    @Column({ nullable: true })
-    sales_pitch: string;
-
-    @Column({ nullable: true })
-    image: string;
 
     @CreateDateColumn()
     created_at: Date;
