@@ -50,16 +50,16 @@ export class RelationshipService extends Repository<RelationshipEntity> {
      */
     public async getRelationships(userId: string, type: string): Promise<Relationship[]> {
         const query = type === 'followers' ?
-            `SELECT u.user_id, u.first_name, u.last_name,FROM public.user_entity u
+            `SELECT u.user_id, u.first_name, u.last_name FROM public.user_entity u
             JOIN public.relationship_entity r ON u.user_id = r.user_id
             WHERE r.friend_id = $1`
         :
             type === 'following' ?
-            `SELECT u.user_id, u.first_name, u.last_name, u.profile_picture FROM public.user_entity u
+            `SELECT u.user_id, u.first_name, u.last_name FROM public.user_entity u
             JOIN public.relationship_entity r ON u.user_id = r.friend_id
             WHERE r.user_id = $1`
         :
-            `SELECT u.user_id, u.first_name, u.last_name, u.profile_picture FROM public.user_entity u
+            `SELECT u.user_id, u.first_name, u.last_name FROM public.user_entity u
             WHERE u.user_id IN (
                 SELECT r1.friend_id FROM public.relationship_entity r1
                 JOIN public.relationship_entity r2 ON r1.friend_id = r2.user_id

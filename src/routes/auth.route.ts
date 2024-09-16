@@ -1,19 +1,32 @@
-// import { Router } from "express";
-// import { AuthController } from "../controllers/auth.controller";
-// import { ValidationMiddleware } from "../middlewares/validation.middleware";
+import { Router } from "express";
+import { AuthController } from "../controllers/auth.controller";
 
+/**
+ * Handles all routes related to authentication
+ */
+export class AuthRoute {
+    /**
+     * The express router
+     */
+    public router = Router();
+    /**
+     * The auth controller
+     */
+    public auth = new AuthController();
 
+    /**
+     * Initialize the routes
+     */
+    constructor() {
+        this.initializeRoutes();
+    }
 
-// export class AuthRoute {
-//     public router = Router();
-//     public auth = new AuthController()
+    /**
+     * Initialize the routes
+     */
+    private initializeRoutes() {
+        // Login route
+        this.router.post("/login", this.auth.Login);
+    }
+}
 
-//     constructor() {
-//         this.initializeRoutes();
-//     }
-
-//     private initializeRoutes() {
-//         this.router.post("/signup", ValidationMiddleware(CreateUserDto), this.auth.SignUp);
-//         this.router.post("/login", this.auth.Login);
-//     }
-// }

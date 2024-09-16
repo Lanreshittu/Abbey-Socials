@@ -1,20 +1,50 @@
-// import { UserController } from "../controllers/user.controller";
-// import { Router } from "express";
-// import { AuthMiddleware } from "../middlewares/auth.middleware";
+import { UserController } from "../controllers/user.controller";
+import { Router } from "express";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
-// export class UserRoute {
-//   public path = "/users";
-//   public router = Router();
-//   public user = new UserController();
+/**
+ * Handles all routes related to users
+ */
+export class UserRoute {
+  /**
+   * The base path for all user routes
+   */
+  public path = "/users";
 
-//   constructor() {
-//     this.initializeRoutes();
-//   }
+  /**
+   * The express router
+   */
+  public router = Router();
 
-//   private initializeRoutes() {
-//     this.router.get(`${this.path}`, AuthMiddleware, this.user.getUsers);
-//     this.router.get(`${this.path}/details`, AuthMiddleware, this.user.getUserById);
-//     this.router.put(`${this.path}`, AuthMiddleware, this.user.updateUser);
-//     this.router.delete(`${this.path}/:id`, AuthMiddleware, this.user.deleteUser);
-//   }
-// }
+  /**
+   * The user controller
+   */
+  public user = new UserController();
+
+  /**
+   * Initializes the routes
+   */
+  constructor() {
+    this.initializeRoutes();
+  }
+
+  /**
+   * Initializes the routes
+   */
+  private initializeRoutes() {
+    // Create a new user
+    this.router.post(`${this.path}/signup`, this.user.SignUp);
+
+    // Get all users
+    this.router.get(`${this.path}`, AuthMiddleware, this.user.getUsers);
+
+    // Get a user with the given id
+    this.router.get(`${this.path}/details`, AuthMiddleware, this.user.getUserById);
+
+    // Update a user with the given id
+    this.router.put(`${this.path}`, AuthMiddleware, this.user.updateUser);
+
+    // Delete a user with the given id
+    this.router.delete(`${this.path}`, AuthMiddleware, this.user.deleteUser);
+  }
+}

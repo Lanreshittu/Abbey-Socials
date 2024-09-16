@@ -24,8 +24,8 @@ export class UserService {
 
     // Insert the user into the database and return the created user
     const query = `INSERT INTO public.user_entity(
-            user_id, first_name, last_name, email, password, phone_number, location, profile_picture)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
+            user_id, first_name, last_name, email, password, phone_number, location)
+            VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
     const createdUser: User[] = await AppDataSource.query(query, [
       userData.first_name.toLowerCase() + userData.last_name.toLowerCase() +  Math.floor(1 + Math.random() * 10000),
       userData.first_name,
