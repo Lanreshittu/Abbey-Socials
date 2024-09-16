@@ -63,9 +63,9 @@ export class UserController {
    * @param {Response} res Response object
    * @param {NextFunction} next Next function
    */
-  public getUserById = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+  public getUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId: string | undefined = String(req.user?.user_id);
+      const userId: string | undefined = req.params.id;
       const user: User = await this.user.getUserDetails(userId);
       res.status(200).json({ status: 200, message: "data retrieved successfully", data: user });
     } catch (error) {

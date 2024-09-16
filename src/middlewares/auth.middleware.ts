@@ -6,11 +6,12 @@ import { httpException } from "../exceptions/httpException";
 import { UserEntity } from "../entities/users.entity";
 
 const getAuthorization = (req: any) => {
-  const coockie = req.cookies["Authorization"];
-  if (coockie) return coockie;
-
+ 
   const header = req.header("Authorization");
   if (header) return header.split("Bearer ")[1];
+
+  const coockie = req.cookies["Authorization"];
+  if (coockie) return coockie;
 
   return null;
 };

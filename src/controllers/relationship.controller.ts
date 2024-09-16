@@ -59,9 +59,9 @@ export class RelationshipController {
    * @param res Response with the relationships of the user
    * @param next Next function to call if an error occurs
    */
-  public getRelationships = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+  public getRelationships = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId: string | undefined = String(req.user?.user_id);
+      const userId: string | undefined =  req.params.id;
       const type = req.query.type as "followers" | "following" | "friends";
       const relationships: Relationship[] = await this.relationshipService.getRelationships(userId, type);
       res.status(200).json({
@@ -69,6 +69,17 @@ export class RelationshipController {
         message: "User relationships",
         data: relationships
       });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public isFollowing = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+    try {
+      const userId: string | undefined = String(req.user?.user_id);
+      const friend_id: string = req.params.id;
+      const isFollowing: boolean = await this.relationshipService.isFollowing(userId, friend_id);
+      res.status(200).json({ status: 200, message: "User is following", data: isFollowing });
     } catch (error) {
       next(error);
     }

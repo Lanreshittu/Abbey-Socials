@@ -69,5 +69,11 @@ export class RelationshipService extends Repository<RelationshipEntity> {
         const relationships = await this.query(query, [userId]);
         return relationships;
     }
+
+    public async isFollowing(userId: string, friendId: string): Promise<boolean> {
+        const query = `SELECT * FROM public.relationship_entity WHERE user_id = $1 AND friend_id = $2`;
+        const relationship: Relationship[] = await this.query(query, [userId, friendId]);
+        return relationship.length > 0;
+      }
 }
 

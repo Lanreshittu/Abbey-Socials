@@ -39,7 +39,7 @@ export class UserRoute {
     this.router.get(`${this.path}`, AuthMiddleware, this.user.getUsers);
 
     // Get a user with the given id
-    this.router.get(`${this.path}/details`, AuthMiddleware, this.user.getUserById);
+    this.router.get(`${this.path}/:id`, AuthMiddleware, this.user.getUserById);
 
     // Update a user with the given id
     this.router.put(`${this.path}`, AuthMiddleware, this.user.updateUser);
